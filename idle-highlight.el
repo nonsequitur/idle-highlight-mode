@@ -64,8 +64,8 @@
  "Face used to highlight other occurrences of the word at point."
  :group 'idle-highlight)
 
-(defvar idle-highlight-last-word nil
- "Last word to be idle-highlighted.")
+(defvar idle-highlight-last-regexp nil
+ "Last regexp to be idle-highlighted.")
 
 (defvar idle-highlight-timer nil
  "Timer to activate re-highlighting.")
@@ -74,15 +74,12 @@
  "Highlight the word under the point."
  (let* ((target-symbol (symbol-at-point))
         (target (symbol-name target-symbol)))
-   (when idle-highlight-last-word
-     (unhighlight-regexp (concat "\\<"
-                                 (regexp-quote idle-highlight-last-word)
-                                 "\\>")))
+   (if idle-highlight-last-regexp (unhighlight-regexp idle-highlight-last-regexp))
    (when (and idle-highlight-timer target target-symbol
               ;; TODO: no need to highlight keywords like if
               (not (in-string-p)) (not (equal target "end")))
-     (highlight-regexp (concat "\\<" (regexp-quote target) "\\>") 'idle-highlight)
-     (setq idle-highlight-last-word target))))
+     (setq idle-highlight-last-regexp (concat "\\<" (regexp-quote target) "\\>"))
+     (highlight-regexp idle-highlight-last-regexp 'idle-highlight))))
 
 ;;;###autoload
 (defun idle-highlight (&optional arg)
@@ -93,7 +90,7 @@
      (progn
        (cancel-timer idle-highlight-timer)
        (setq idle-highlight-timer nil))
-   (set (make-local-variable 'idle-highlight-last-word) nil)
+   (set (make-local-variable 'idle-highlight-last-regexp) nil)
    (set (make-local-variable 'idle-highlight-timer)
         (run-with-idle-timer 0.5 :repeat 'idle-highlight-word-at-point))))
 
