@@ -81,8 +81,7 @@
    (when (and idle-highlight-timer target target-symbol
               ;; TODO: no need to highlight keywords like if
               (not (in-string-p)) (not (equal target "end")))
-     (highlight-regexp (concat "\\<" (regexp-quote target) "\\>")
-'idle-highlight)
+     (highlight-regexp (concat "\\<" (regexp-quote target) "\\>") 'idle-highlight)
      (setq idle-highlight-last-word target))))
 
 ;;;###autoload
