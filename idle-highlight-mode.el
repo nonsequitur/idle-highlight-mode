@@ -1,10 +1,10 @@
-;;; idle-highlight.el --- highlight the word the point is on
+;;; idle-highlight-mode.el --- highlight the word the point is on
 
-;; Copyright (C) 2008 Phil Hagelberg
+;; Copyright (C) 2008-2011 Phil Hagelberg, Cornelius Mika
 
-;; Author: Phil Hagelberg <technomancy@gmail.com>
+;; Author: Phil Hagelberg, Cornelius Mika
 ;; URL: http://www.emacswiki.org/cgi-bin/wiki/IdleHighlight
-;; Version: 1.0
+;; Version: 1.1.1
 ;; Created: 2008-05-13
 ;; Keywords: convenience
 ;; EmacsWiki: IdleHighlight
@@ -32,7 +32,7 @@
 
 ;; Based on some snippets by fledermaus from the #emacs channel.
 
-;; M-x idle-highlight sets an idle timer that highlights all
+;; M-x idle-highlight-mode sets an idle timer that highlights all
 ;; occurences in the buffer of the word under the point.
 
 ;; Enabling it in a hook is recommended. But you don't want it enabled
@@ -44,7 +44,7 @@
 ;;   (make-local-variable 'column-number-mode)
 ;;   (column-number-mode t)
 ;;   (if window-system (hl-line-mode t))
-;;   (idle-highlight))
+;;   (idle-highlight t))
 ;;
 ;; (add-hook 'emacs-lisp-mode-hook 'my-coding-hook)
 ;; (add-hook 'ruby-mode-hook 'my-coding-hook)
@@ -96,5 +96,5 @@
              (set (make-local-variable 'idle-highlight-regexp) nil))
     (idle-highlight-unhighlight)))
 
-(provide 'idle-highlight)
-;;; idle-highlight.el ends here
+(provide 'idle-highlight-mode)
+;;; idle-highlight-mode.el ends here
