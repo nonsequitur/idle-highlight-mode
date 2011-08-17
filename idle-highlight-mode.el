@@ -75,7 +75,8 @@
   (if idle-highlight-mode
       (let* ((target-symbol (symbol-at-point))
              (target (symbol-name target-symbol)))
-        (if (and target-symbol (not (in-string-p))
+        (if (and target-symbol
+                 (not (in-string-p))
                  ;; TODO: no need to highlight keywords like if
                  (not (equal target "end"))) 
             (progn (idle-highlight-unhighlight)
