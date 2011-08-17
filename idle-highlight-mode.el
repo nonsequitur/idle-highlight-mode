@@ -75,19 +75,19 @@
   (if idle-highlight-mode
       (let* ((target-symbol (symbol-at-point))
              (target (symbol-name target-symbol)))
-        (if (and target-symbol
-                 (not (in-string-p))
-                 (looking-at-p "\\s_\\|\\sw") ;; Symbol characters
-                 ;; TODO: no need to highlight keywords like if
-                 (not (equal target "end"))) 
-            (progn (idle-highlight-unhighlight)
-                   (setq idle-highlight-regexp (concat "\\<" (regexp-quote target) "\\>"))
-                   (highlight-regexp idle-highlight-regexp 'idle-highlight))
-          (idle-highlight-unhighlight)
-          (setq idle-highlight-regexp nil)))))
+        (idle-highlight-unhighlight)
+        (when (and target-symbol
+                   (not (in-string-p))
+                   (looking-at-p "\\s_\\|\\sw") ;; Symbol characters
+                   ;; TODO: no need to highlight keywords like if
+                   (not (equal target "end"))) 
+          (setq idle-highlight-regexp (concat "\\<" (regexp-quote target) "\\>"))
+          (highlight-regexp idle-highlight-regexp 'idle-highlight)))))
 
 (defsubst idle-highlight-unhighlight ()
-  (if idle-highlight-regexp (unhighlight-regexp idle-highlight-regexp)))
+  (when idle-highlight-regexp
+    (unhighlight-regexp idle-highlight-regexp)
+    (setq idle-highlight-regexp nil)))
 
 ;;;###autoload
 (define-minor-mode idle-highlight-mode
