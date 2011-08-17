@@ -4,7 +4,7 @@
 
 ;; Author: Phil Hagelberg, Cornelius Mika
 ;; URL: http://www.emacswiki.org/cgi-bin/wiki/IdleHighlight
-;; Version: 1.1.1
+;; Version: 1.1.2
 ;; Created: 2008-05-13
 ;; Keywords: convenience
 ;; EmacsWiki: IdleHighlight
