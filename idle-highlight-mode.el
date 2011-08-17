@@ -77,6 +77,7 @@
              (target (symbol-name target-symbol)))
         (if (and target-symbol
                  (not (in-string-p))
+                 (looking-at-p "\\s_\\|\\sw") ;; Symbol characters
                  ;; TODO: no need to highlight keywords like if
                  (not (equal target "end"))) 
             (progn (idle-highlight-unhighlight)
