@@ -70,6 +70,16 @@
 (defvar idle-highlight-global-timer nil
  "Timer to trigger highlighting.")
 
+(defcustom idle-highlight-exceptions '("end")
+  "List of words to be excepted from highlighting."
+  :group 'idle-highlight
+  :type '(repeat string))
+
+(defcustom idle-highlight-idle-time 0.5
+  "Time after which to highlight the word at point."
+  :group 'idle-highlight
+  :type 'float)
+
 (defun idle-highlight-word-at-point ()
   "Highlight the word under the point."
   (if idle-highlight-mode
@@ -79,8 +89,7 @@
         (when (and target-symbol
                    (not (in-string-p))
                    (looking-at-p "\\s_\\|\\sw") ;; Symbol characters
-                   ;; TODO: no need to highlight keywords like if
-                   (not (equal target "end"))) 
+                   (not (member target idle-highlight-exceptions)))
           (setq idle-highlight-regexp (concat "\\<" (regexp-quote target) "\\>"))
           (highlight-regexp idle-highlight-regexp 'idle-highlight)))))
 
@@ -96,7 +105,8 @@
   (if idle-highlight-mode
       (progn (unless idle-highlight-global-timer
                (setq idle-highlight-global-timer
-                     (run-with-idle-timer 0.5 :repeat 'idle-highlight-word-at-point)))
+                     (run-with-idle-timer idle-highlight-idle-time
+                                          :repeat 'idle-highlight-word-at-point)))
              (set (make-local-variable 'idle-highlight-regexp) nil))
     (idle-highlight-unhighlight)))
 
